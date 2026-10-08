@@ -1,0 +1,9 @@
+
+### DELETE successful
+DELETE http://localhost:8080/api/lab4/item/1
+
+### DELETE with error (ID = 0)
+DELETE http://localhost:8080/api/lab4/item/0
+
+### DELETE with error (ID = -1)
+DELETE http://localhost:8080/api/lab4/item/-1
