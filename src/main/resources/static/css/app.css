@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f3f5f8;
+    color: #243247;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    margin: 25px 0;
+}
+
+th, td {
+    padding: 14px;
+    border: 1px solid #d4dce6;
+    text-align: left;
+}
+
+th {
+    background: #243247;
+    color: white;
+}
+
+form {
+    margin: 20px 0;
+}
+
+input, button {
+    padding: 10px;
+    margin: 4px;
+    border: 1px solid #c5ced9;
+    border-radius: 5px;
+}
+
+button {
+    background: #245fc5;
+    color: white;
+    cursor: pointer;
+}
+
+a {
+    color: #245fc5;
+}
+
+.flash {
+    padding: 15px;
+    background: #d9f2df;
+    border: 1px solid #8ac69a;
+    border-radius: 5px;
+}
