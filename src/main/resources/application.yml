@@ -1,6 +1,21 @@
+
 spring:
   application:
     name: spring-lab
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/springlab
+    username: postgres
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
 
 server:
   port: 8080
@@ -9,7 +24,7 @@ app:
   owner: Osserbay Nurdaulet
   group: IT1-2402 IS
   security:
-    jwt-secret: my-super-secret-key-12345
+    jwt-secret: ${JWT_SECRET:my-super-secret-key-12345}
     token-validity: 3600s
   mail:
     from: no-reply@iitu.kz
@@ -20,9 +35,10 @@ app:
 logging:
   level:
     kz.iitu: INFO
+    org.springframework.security: DEBUG
 
 management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: health,info

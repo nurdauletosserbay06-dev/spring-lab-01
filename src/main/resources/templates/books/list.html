@@ -1,22 +1,31 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}">Catalogue</title>
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 <body>
+
 <h1 th:text="${title}">Catalogue</h1>
 
-<p th:if="${message}" class="flash" th:text="${message}"></p>
+<p th:if="${message}"
+   class="flash"
+   th:text="${message}"></p>
 
-<form action="/books" method="get">
+<!-- Filter books -->
+<form th:action="@{/books}" method="get">
     <label for="filter">Filter by author:</label>
-    <input id="filter" name="author" placeholder="For example: Bloch">
+    <input id="filter"
+           name="author"
+           placeholder="For example: Bloch">
+
     <button type="submit">Filter</button>
-    <a href="/books">Show all</a>
+    <a th:href="@{/books}">Show all</a>
 </form>
 
+<!-- Book catalogue -->
 <table>
     <thead>
     <tr>
@@ -36,13 +45,34 @@
     </tbody>
 </table>
 
+<!-- Add a book -->
 <h2>Add a book</h2>
 
-<form action="/books" method="post">
-    <input name="title" placeholder="Title" required>
-    <input name="author" placeholder="Author" required>
-    <input name="year" type="number" placeholder="Year" required>
+<form th:action="@{/books}" method="post">
+
+    <!-- CSRF protection -->
+    <input type="hidden"
+           th:name="${_csrf.parameterName}"
+           th:value="${_csrf.token}">
+
+    <input name="title"
+           placeholder="Title"
+           required>
+
+    <input name="author"
+           placeholder="Author"
+           required>
+
+    <input name="year"
+           type="number"
+           placeholder="Year"
+           required>
+
     <button type="submit">Add book</button>
 </form>
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Logout</button>
+</form>
+
 </body>
 </html>
