@@ -3,6 +3,7 @@ package kz.iitu.springlab.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,35 +25,47 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests(auth -> auth
-                        // Доступ без авторизации
+
+                        // Public pages
                         .requestMatchers(
+                                "/",
                                 "/login",
                                 "/css/**",
                                 "/js/**",
                                 "/images/**"
                         ).permitAll()
 
-                        // Только для ADMIN
+                        // USER and ADMIN can view books
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/books",
+                                "/books/**"
+                        ).hasAnyRole("USER", "ADMIN")
+
+                        // Only ADMIN can add, edit or delete books
+                        .requestMatchers(
+                                "/books",
+                                "/books/**"
+                        ).hasRole("ADMIN")
+
+                        // Only ADMIN can access admin pages
                         .requestMatchers(
                                 "/admin",
                                 "/admin/**"
                         ).hasRole("ADMIN")
 
-                        // Для ADMIN и USER
-                        .requestMatchers("/books/**").authenticated()
-
-                        // Остальные страницы требуют авторизации
-                        .anyRequest().authenticated()
+                        // Deny all other requests
+                        .anyRequest().denyAll()
                 )
 
-                // Настройка страницы входа
+                // Custom login page
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/", false)
                         .permitAll()
                 )
 
-                // Выход из аккаунта
+                // Logout
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
